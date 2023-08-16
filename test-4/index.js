@@ -1,7 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import { Login, Register } from "./Controllers/User.controller.js";
+import {
+  Login,
+  Register,
+  getCurrentUser,
+} from "./Controllers/User.controller.js";
+import { addProduct } from "./Controllers/Product.controller.js";
+import { checkSeller } from "./Middlewares/Seller.Middleware.js";
 
 const app = express();
 app.use(express.json());
@@ -15,6 +21,10 @@ app.post("/register", Register);
 
 app.post("/login", Login);
 
+app.post("/get-current-user", getCurrentUser);
+
+app.post("/add-product", checkSeller, addProduct);
+
 mongoose.connect(process.env.MONGO_URL).then(() => {
   console.log("Connected to DB!");
 });
@@ -22,6 +32,3 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
 app.listen(8000, () => {
   console.log("Server running on port 8000!");
 });
-
-
-
