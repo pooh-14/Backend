@@ -6,7 +6,7 @@ import {
   Register,
   getCurrentUser,
 } from "./Controllers/User.controller.js";
-import { addProduct } from "./Controllers/Product.controller.js";
+import { addProduct, allProduct, getYourProducts, updateYourProduct } from "./Controllers/Product.controller.js";
 import { checkSeller } from "./Middlewares/Seller.Middleware.js";
 
 const app = express();
@@ -24,6 +24,12 @@ app.post("/login", Login);
 app.post("/get-current-user", getCurrentUser);
 
 app.post("/add-product", checkSeller, addProduct);
+
+app.get("/all-products", allProduct);
+
+app.get("/get-your-products", checkSeller, getYourProducts)
+
+app.patch("/update-your-product",checkSeller, updateYourProduct )
 
 mongoose.connect(process.env.MONGO_URL).then(() => {
   console.log("Connected to DB!");
