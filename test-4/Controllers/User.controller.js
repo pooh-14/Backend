@@ -46,6 +46,10 @@ export const Login = async (req, res) => {
     const user = await UserModal.findOne({ email });
     if (!user) return res.json({ status: "error", message: "User not found!" });
 
+    if(user.isBlocked){
+      return res.json({ success:"false", message: "You are Blocked!Contact us." })
+    }
+
     const isPasswordRight = await bcrypt.compare(password, user.password);
     console.log(isPasswordRight, "isPasswordRight");
     if (isPasswordRight) {
