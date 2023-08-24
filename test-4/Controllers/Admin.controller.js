@@ -141,7 +141,7 @@ export const getAllBuyers = async (req, res) => {
             return res.status(404).json({ status: "error", message: "Token not valid." })
         }
 
-        const userId = decodedData.userId;
+        // const userId = decodedData.userId;
 
         const buyers = await UserModal.find({ role: "Buyer" })
 
@@ -167,7 +167,7 @@ export const getAllSellers = async (req, res) => {
             return res.status(404).json({ status: "error", message: "Token not valid." })
         }
 
-        const userId = decodedData.userId;
+        // const userId = decodedData.userId;
 
         const sellers = await UserModal.find({ role: "Seller" })
 
