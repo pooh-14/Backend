@@ -1,43 +1,47 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 
 const Login = () => {
-  const [userData, setUserData] = useState({ email: "", password: "" });
-  const { Login } = useContext(AuthContext);
+  const [userData, setUserData] = useState({ email: "", password: "" })
 
-  const router = useNavigate();
+    const { state, dispatch } = useContext(AuthContext)
+    const router = useNavigate()
 
-  const handleChange = (event) => {
-    setUserData({ ...userData, [event.target.name]: event.target.value });
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (userData.email && userData.password) {
-      const response = await axios.post("http://localhost:8000/login", {
-        userData,
-      });
-      // console.log(response.data);
-
-      if (response.data.success) {
-        const users = response.data.user;
-        const tokens = response.data.token;
-        await Login(users, tokens);
-
-        setUserData({ email: "", password: "" });
-
-        router("/");
-        toast.success(response.data.message);
-      } else {
-        toast.error(response.data.message);
-      }
-    } else {
-      toast.error("All fields are mandatory");
+    const handleChange = (event) => {
+        setUserData({ ...userData, [event.target.name]: event.target.value })
     }
-  };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (userData.email && userData.password) {
+            const response = await axios.post("http://localhost:8000/login", { userData });
+            if (response.data.success) {
+                dispatch({
+                    type: 'LOGIN',
+                    payload: response.data.user
+                })
+                localStorage.setItem("token", JSON.stringify(response.data.token))
+                setUserData({ email: "", password: "" })
+                router('/')
+                toast.success(response.data.message)
+            } else {
+                toast.error(response.data.message)
+            }
+        } else {
+            toast.error("All fields are mandtory.")
+        }
+    }
+    // console.log(userData, "userData")
+
+    useEffect(() => {
+        if (state?.user?.name) {
+            router('/')
+        }
+    }, [state])
+
 
   return (
     <div

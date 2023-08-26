@@ -1,28 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../Context/AuthContext';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 
-const Home = () => {
-
-  const { state } = useContext(AuthContext);
-  const [allProducts, setAllProducts] = useState();
+const YourProducts = () => {
+    const [allProducts, setAllProducts] = useState();
     useEffect(() => {
         async function getProducts() {
             const token = JSON.parse(localStorage.getItem("token"));
-            const response = await axios.get("http://localhost:8000/all-products", { token })
+            const response = await axios.post("http://localhost:8000/get-your-products", { token })
             if (response.data.success) {
                 setAllProducts(response.data.products)
             }
         }
         getProducts();
     }, [])
-
-  return (
-    <div>
-      
-    <div style={{textAlign:"center"}}>Welcome- {state?.user?.name}</div>
-    <div>
-            <h1></h1>
+    return (
+        <div>
+            <h1>Your Products</h1>
 
             {allProducts?.length ? <div style={{ display: "flex", justifyContent: "space-around" }}> {allProducts.map((product) => (
                 <div style={{border:"2px solid grey", width:"230px", height:"400px"}} key={product._id}>
@@ -33,9 +26,7 @@ const Home = () => {
             ))}
             </div> : <div>No Products found!</div>}
         </div>
-    </div>
-
-  )
+    )
 }
 
-export default Home
+export default YourProducts

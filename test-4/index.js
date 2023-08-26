@@ -35,11 +35,13 @@ import {
   isValidUser,
 } from "./Middlewares/All.Middleware.js";
 import cors from 'cors';
+import morgan from 'morgan';
 
 const app = express();
 app.use(express.json());
 dotenv.config();
 app.use(cors());
+app.use(morgan("dev"))
 
 app.get("/", (req, res) => {
   res.send("Working!");
@@ -55,7 +57,7 @@ app.post("/add-product", checkSeller, addProduct);
 
 app.get("/all-products", allProduct);
 
-app.get("/get-your-products", checkSeller, getYourProducts);
+app.post("/get-your-products", checkSeller, getYourProducts);
 
 app.patch("/update-your-product", checkSeller, updateYourProduct);
 

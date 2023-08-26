@@ -58,10 +58,12 @@ export const Login = async (req, res) => {
         name: user.name,
         email: user.email,
         _id: user._id,
+        role: user.role
+
       };
 
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET );
-      console.log(token, "token here");
+      // console.log(token, "token here");
 
       return res.json({ success: true, message: "Login Successfull" ,user : userObj,token: token});
     }
@@ -78,11 +80,12 @@ export const getCurrentUser = async (req, res) => {
       if (!token) return res.status(404).json({ status: "error", message: "Token is required!" })
 
       const decoededData = jwt.verify(token, process.env.JWT_SECRET)
-      console.log(decoededData, "decoededData")
+      // console.log(decoededData, "decoededData")
       if (!decoededData) {
           return res.status(404).json({ status: "error", message: "Not valid json token.." })
       }
       // return res.send(decoededData)
+
       const userId = decoededData?.userId
 
       const user = await UserModal.findById(userId);
@@ -94,7 +97,8 @@ export const getCurrentUser = async (req, res) => {
       const userObeject = {
           name: user?.name,
           email: user?.email,
-          _id: user?._id
+          _id: user?._id,
+          role: user?.role
       }
 
       return res.status(200).json({ status: "Success", user: userObeject })

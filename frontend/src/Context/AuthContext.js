@@ -1,56 +1,55 @@
+import axios from "axios";
 import { createContext, useEffect, useReducer } from "react";
+import { toast } from 'react-hot-toast'
 
 export const AuthContext = createContext();
 
-const initalState = { user: null, token: null };
+const initialState = { user: null };
 
 const reducer = (state, action) => {
-  switch (action.type) {
-    case "LOGIN":
-      return { ...state, user: action.payload, token: action.token };
-    case "LOGOUT":
-      return { user: null, token: null };
-    default:
-      return state;
-  }
-};
-export const AuthProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initalState);
-
-  function Login(userData, token) {
-    localStorage.setItem("Mongo-users", JSON.stringify(userData));
-    localStorage.setItem("User-token", JSON.stringify(token));
-    dispatch({
-      type: "LOGIN",
-      payload: userData,
-      token: token,
-    });
-  }
-
-  function Logout() {
-    localStorage.removeItem("Mongo-users");
-    localStorage.removeItem("User-token");
-    dispatch({
-      type: "LOGOUT",
-    });
-  }
-
-  useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("Mongo-users"));
-    const tokenData = JSON.parse(localStorage.getItem("User-token"));
-    // console.log(userData, "userData")
-    if (userData) {
-      dispatch({
-        type: "LOGIN",
-        payload: userData,
-        token: tokenData,
-      });
+    switch (action.type) {
+        case 'LOGIN':
+            return { ...state, user: action.payload }
+        case 'LOGOUT':
+            localStorage.removeItem("token")
+            toast.success("Logout success.")
+            return { ...state, user: null }
+        default:
+            return state
     }
-  }, []);
+}
 
-  return (
-    <AuthContext.Provider value={{ state, Login, Logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
+// Its a higher order function hof 
+const HandleAuthContext = ({ children }) => {
+    const [state, dispatch] = useReducer(reducer, initialState)
+
+    useEffect(() => {
+        async function getCurrentUserData() {
+            var token = JSON.parse(localStorage.getItem("token"));
+            if (token) {
+                const response = await axios.post("http://localhost:8000/get-current-user", { token });
+                if (response.data.success) {
+                    dispatch({
+                        type: "LOGIN",
+                        payload: response.data.user
+                    })
+                } else {
+                    dispatch({
+                        type: "LOGOUT"
+                    });
+                }
+            }
+
+        }
+        getCurrentUserData();
+    }, [])
+
+    return (
+        <AuthContext.Provider value={{ state, dispatch }}>
+            {children}
+        </AuthContext.Provider>
+    )
+
+}
+
+export default HandleAuthContext;
