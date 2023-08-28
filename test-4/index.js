@@ -5,6 +5,9 @@ import {
   Login,
   Register,
   getCurrentUser,
+  getNumber,
+  sendOtp,
+  verifyOtp,
 } from "./Controllers/User.controller.js";
 import {
   addComments,
@@ -56,6 +59,19 @@ app.post("/get-current-user", getCurrentUser);
 app.post("/add-product", checkSeller, addProduct);
 
 app.get("/all-products", allProduct);
+
+app.post("/get-number", getNumber)
+
+app.post("/send-otp", sendOtp)
+
+app.post("/verify-otp", verifyOtp)
+
+
+
+
+
+
+
 
 app.post("/get-your-products", checkSeller, getYourProducts);
 

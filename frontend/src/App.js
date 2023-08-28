@@ -9,6 +9,7 @@ import { AuthContext } from './Context/AuthContext';
 import AddProduct from './Components/Seller/AddProduct';
 import YourProducts from './Components/Seller/YourProduct';
 import Navbar from './Components/Common/Navbar';
+import Profile from './Components/Profile';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         <Route exact path='/login' element={<Login/>}/>
         <Route exact path='/addproduct' element={<AddProduct />} />
         <Route exact path='/yourproduct' element={<YourProducts />} />
+        <Route exact path='/profile' element={<Profile/>}/>
       </Routes>
     </div>
   );

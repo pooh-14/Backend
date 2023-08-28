@@ -7,7 +7,7 @@ import { AuthContext } from '../Context/AuthContext'
 
 const Register = () => {
 
-  const [userData, setUserData] = useState({ name: "", email: "", password: "", confirmPassword: "", role: "Buyer" })
+  const [userData, setUserData] = useState({ name: "", email: "", password: "", confirmPassword: "", role: "Buyer", number:"" })
 
   const { state } = useContext(AuthContext)
   const router = useNavigate()
@@ -21,11 +21,11 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
       event.preventDefault();
-      if (userData.name && userData.email && userData.password && userData.confirmPassword && userData.role) {
+      if (userData.name && userData.email && userData.password && userData.confirmPassword && userData.role && userData.number) {
           if (userData.password === userData.confirmPassword) {
               const response = await axios.post("http://localhost:8000/register", { userData });
               if (response.data.success) {
-                  setUserData({ name: "", email: "", password: "", confirmPassword: "", role: "Buyer" })
+                  setUserData({ name: "", email: "", password: "", confirmPassword: "", role: "Buyer",number:"" })
                   router('/login')
                   toast.success(response.data.message)
               } else {
@@ -106,6 +106,22 @@ const Register = () => {
                 type="email"
                 name="email"
                 value={userData.email}
+                onChange={handleChange}
+              />
+              <br />
+              <label>Number:</label>
+              <br />
+              <input
+                style={{
+                  width: "380px",
+                  marginTop: "10px",
+                  height: "30px",
+                  marginBottom: "10px",
+                  textAlign: "centre",
+                }}
+                type="number"
+                name="number"
+                value={userData.number}
                 onChange={handleChange}
               />
               <br />

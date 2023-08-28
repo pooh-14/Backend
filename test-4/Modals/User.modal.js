@@ -9,25 +9,36 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  number:{
+    type: Number,
+    required: true,
+  },
+  isNumberVerified:{
+    type:Boolean,
+    default:false
+  },
+  otpForNumberVerification:{
+    type:Number,
+  },
   password: {
     type: String,
     required: true,
   },
   role: {
-      type: String,
-      enum: ['Buyer', 'Seller', "Admin"],
-      default: "Buyer"
+    type: String,
+    enum: ["Buyer", "Seller", "Admin"],
+    default: "Buyer",
   },
   cart: {
-    type: [String]
-},
-wishlist: {
-    type: [String]
-},
-isBlocked: {
+    type: [String],
+  },
+  wishlist: {
+    type: [String],
+  },
+  isBlocked: {
     type: Boolean,
-    default: false
-}
+    default: false,
+  },
 });
 
 export default mongoose.model("User", userSchema);
