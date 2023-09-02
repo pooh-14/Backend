@@ -72,8 +72,12 @@ export const Login = async (req, res) => {
         role: user.role,
       };
 
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
       // console.log(token, "token here");
+      const expiryTime = user?.role == "Seller" ? "4h" : "1h";
+      // console.log(expiryTime, "expiryTime")
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+        expiresIn: expiryTime,
+      });
 
       return res.json({
         success: true,
@@ -198,7 +202,6 @@ export const verifyOtp = async (req, res) => {
 
     if (user) {
       if (user.otpForNumberVerification == otp) {
-        
         user.isNumberVerified = true;
 
         await user.save();

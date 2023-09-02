@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
-import axios from 'axios'
 import { toast } from 'react-hot-toast'
 import { AuthContext } from '../Context/AuthContext'
+import api from './ApiConfig'
 
 
 const Register = () => {
@@ -23,7 +23,7 @@ const Register = () => {
       event.preventDefault();
       if (userData.name && userData.email && userData.password && userData.confirmPassword && userData.role && userData.number) {
           if (userData.password === userData.confirmPassword) {
-              const response = await axios.post("http://localhost:8000/register", { userData });
+              const response = await api.post("/register", { userData });
               if (response.data.success) {
                   setUserData({ name: "", email: "", password: "", confirmPassword: "", role: "Buyer",number:"" })
                   router('/login')

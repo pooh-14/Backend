@@ -1,9 +1,9 @@
 import SellerProtected from "../Common/SellerProtected";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
+import api from "../ApiConfig";
 
 const AddProduct = () => {
   const [productData, setProductData] = useState({
@@ -30,7 +30,7 @@ const AddProduct = () => {
     ) {
       const token = JSON.parse(localStorage.getItem("token"));
       try {
-        const response = await axios.post("http://localhost:8000/add-product", {
+        const response = await api.post("/add-product", {
           token,
           productData,
         });

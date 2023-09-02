@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../Context/AuthContext';
-import axios from 'axios';
 
 const Home = () => {
 
@@ -9,7 +8,7 @@ const Home = () => {
     useEffect(() => {
         async function getProducts() {
             const token = JSON.parse(localStorage.getItem("token"));
-            const response = await axios.get("http://localhost:8000/all-products", { token })
+            const response = await api.get("/all-products", { token })
             if (response.data.success) {
                 setAllProducts(response.data.products)
             }

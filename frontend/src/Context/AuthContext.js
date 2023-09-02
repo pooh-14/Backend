@@ -1,6 +1,6 @@
-import axios from "axios";
 import { createContext, useEffect, useReducer } from "react";
 import { toast } from 'react-hot-toast'
+import api from "../Components/ApiConfig";
 
 export const AuthContext = createContext();
 
@@ -29,7 +29,7 @@ const HandleAuthContext = ({ children }) => {
 
             if (token) {
                 try {
-                    const response = await axios.post("http://localhost:8000/get-current-user", { token });
+                    const response = await api.post("/get-current-user", { token });
                 console.log(response.data,"-resspomnse data")
                 if (response.data.success) {
                     dispatch({

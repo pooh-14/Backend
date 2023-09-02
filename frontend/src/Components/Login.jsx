@@ -1,8 +1,8 @@
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
+import api from "./ApiConfig";
 
 const Login = () => {
   const [userData, setUserData] = useState({ email: "", password: "" })
@@ -17,7 +17,7 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (userData.email && userData.password) {
-            const response = await axios.post("http://localhost:8000/login", { userData });
+            const response = await api.post("/login", { userData });
             if (response.data.success) {
                 dispatch({
                     type: 'LOGIN',
