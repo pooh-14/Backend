@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../Context/AuthContext';
+import api from './ApiConfig';
 
 const Home = () => {
 

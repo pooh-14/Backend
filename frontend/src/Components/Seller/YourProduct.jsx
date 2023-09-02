@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import api from '../ApiConfig';
 
 const YourProducts = () => {
     const [allProducts, setAllProducts] = useState();
