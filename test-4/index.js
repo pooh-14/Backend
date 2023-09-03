@@ -13,8 +13,11 @@ import {
   addComments,
   addProduct,
   addRating,
+  addToCart,
+  allCartProducts,
   allProduct,
   deleteYourProduct,
+  getSingleProductData,
   getYourProducts,
   updateYourProduct,
 } from "./Controllers/Product.controller.js";
@@ -78,6 +81,14 @@ app.post("/get-your-products", checkSeller, getYourProducts);
 app.patch("/update-your-product", checkSeller, updateYourProduct);
 
 app.post("/add-cart", addCart);
+
+
+
+app.post("/get-single-product-data", getSingleProductData);
+
+app.post("/add-to-cart", addToCart);
+
+app.post("/all-cart-products", allCartProducts);
 
 app.get("/get-cart-products", getCartProducts);
 

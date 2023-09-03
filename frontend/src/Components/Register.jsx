@@ -12,7 +12,7 @@ const Register = () => {
   const { state } = useContext(AuthContext)
   const router = useNavigate()
 
-  const handleChange = (event) => {
+  const handleChange = (event) => {  
       setUserData({ ...userData, [event.target.name]: event.target.value })
   }
   const selectRole = (event) => {
