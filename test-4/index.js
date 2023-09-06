@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import {
   Login,
   Register,
+  checkOut,
   getCurrentUser,
   getNumber,
   sendOtp,
@@ -81,6 +82,8 @@ app.post("/get-your-products", checkSeller, getYourProducts);
 app.patch("/update-your-product", checkSeller, updateYourProduct);
 
 app.post("/add-cart", addCart);
+
+app.post("/checkout", checkOut);
 
 
 

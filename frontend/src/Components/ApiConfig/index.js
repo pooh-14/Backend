@@ -3,7 +3,7 @@ import axios from "axios";
 const token = JSON.parse(localStorage.getItem("token"));
 
 const api = axios.create({
-  baseURL: "https://e-commerce-f7rw.onrender.com",
+  baseURL: "http://localhost:8000",
   headers: { Authorization: `Bearer ${token}` },
 });
 

@@ -72,12 +72,10 @@ export const Login = async (req, res) => {
         role: user.role,
       };
 
-      // console.log(token, "token here");
-      const expiryTime = user?.role == "Seller" ? "4h" : "1h";
+      // console.log(token, "token here");\
       // console.log(expiryTime, "expiryTime")
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-        expiresIn: expiryTime,
-      });
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET
+      );
 
       return res.json({
         success: true,
@@ -223,3 +221,42 @@ export const verifyOtp = async (req, res) => {
     return res.json({ success: false, message: error });
   }
 };
+
+export const checkOut = async (req, res) => {
+try {
+  
+  const { token } = req.body;
+
+  if (!token)
+    return res
+      .status(404)
+      .json({ success: false, message: "Token is required!" });
+
+      const decoededData = jwt.verify(token, process.env.JWT_SECRET);
+      // return res.send(decoededData)
+      // console.log(decoededData, "decoededData")
+
+      if (!decoededData) {
+        return res
+          .status(404)
+          .json({ success: false, message: "Not valid json token.." });
+      }
+      // return res.send(decoededData)
+  
+      const newuserid = decoededData?.userId;
+
+  const user = await UserModal.findByIdAndUpdate(newuserid,{cart:[]});
+  
+    return res.status(200).json({
+      success: true,
+      message: "Thank you for shopping! Your products will deliver soon...", user
+    })
+  
+} catch (error) {
+  
+  return res.status(500).json({ success: false, message: error.message });
+}
+};
+
+
+
