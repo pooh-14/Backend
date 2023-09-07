@@ -41,6 +41,7 @@ const Cart = () => {
         if (response.data.success) {
           toast.success(response.data.message);
           setCartProducts([]);
+          setFinalPrice([])
         } else {
           toast.error(response.data.message);
         }

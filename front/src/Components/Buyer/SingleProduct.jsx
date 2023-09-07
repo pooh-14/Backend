@@ -28,6 +28,7 @@ const SingleProduct = () => {
   console.log(singleProductData, "singleProductData");
 
   async function addToCart(productId) {
+    
     try {
       const response = await api.post("/add-to-cart", {
         productId,
