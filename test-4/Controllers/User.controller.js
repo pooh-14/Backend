@@ -216,7 +216,7 @@ export const verifyOtp = async (req, res) => {
     }
     return res
       .status(404)
-      .json({ success: false, message: "Not a valid user!" });
+      .json({ success: false, message: "Not a valid user!" }); 
   } catch (error) {
     return res.json({ success: false, message: error });
   }
@@ -249,7 +249,7 @@ try {
   
     return res.status(200).json({
       success: true,
-      message: "Thank you for shopping! Your products will deliver soon...", user
+      message: "Thank you for shopping! Your products will be delivered soon!", user
     })
   
 } catch (error) {
@@ -257,6 +257,7 @@ try {
   return res.status(500).json({ success: false, message: error.message });
 }
 };
+
 
 
 

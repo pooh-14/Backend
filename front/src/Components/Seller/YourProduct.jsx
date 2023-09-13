@@ -17,10 +17,10 @@ const YourProducts = () => {
         <div>
             <h1>Your Products</h1>
 
-            {allProducts?.length ? <div style={{ display: "flex", justifyContent: "space-around" }}> {allProducts.map((product) => (
-                <div style={{border:"2px solid grey", width:"230px", height:"400px"}} key={product._id}>
+            {allProducts?.length ? <div style={{width:"90%",margin:"auto", display: "flex", justifyContent: "space-around", flexWrap:"wrap" }}> {allProducts.map((product) => (
+                <div style={{border:"2px solid grey", width:"230px", height:"400px", marginBottom:"25px"}} key={product._id}>
                     <img style={{width:"100%", height:"73%"}} src={product.image} />
-                    <h3>Name : {product.name}</h3>
+                    <h3> {product.name}</h3>
                     <h3>Price : {product.price}</h3>
                 </div>
             ))}
