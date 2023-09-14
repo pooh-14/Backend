@@ -56,7 +56,7 @@ app.get("/", (req, res) => {
 
 app.post("/register", Register);
 
-app.post("/login", Login);
+app.post("/login",    );
 
 app.post("/get-current-user", getCurrentUser);
 
