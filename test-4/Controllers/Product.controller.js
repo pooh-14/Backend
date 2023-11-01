@@ -77,7 +77,8 @@ export const getYourProducts = async (req, res) => {
 
 export const updateYourProduct = async (req, res) => {
     try {
-        const { productId, name, image, price, category, token } = req.body;
+        const { productId, name, image, price, category } = req.body.productData;
+        const {token} = req.body;
         if (!token) return res.status(404).json({ success: false, message: "Token is mandtory.." })
 
         const decodedData = jwt.verify(token, process.env.JWT_SECRET)
@@ -189,7 +190,7 @@ export const addToCart = async (req, res) => {
   try {
       const { productId, userId } = req.body;
       if (!productId) return res.status(404).json({ success: false, message: "Product id is mandtory.." })
-      if (!userId) return res.status(404).json({ success: false, message: "Usur id is mandtory.." })
+      if (!userId) return res.status(404).json({ success: false, message: "User id is mandtory.." })
 
 
       const user = await UserModal.findByIdAndUpdate(userId, { $push: { cart: productId } })
